@@ -1,0 +1,2 @@
+You can check that you do not have another instance runningby checking the running processes:
+$ ps -aux | grep 'go run'
