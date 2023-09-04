@@ -1,2 +1,56 @@
+Chapter-1
+**************
 You can check that you do not have another instance runningby checking the running processes:
+
 $ ps -aux | grep 'go run'
+---------------------------------------------------------------------------------------------------
+This is exactly what we want, but we can use field tags to control the output even further.
+We can convert object types and even ignore a field altogether if we need to:
+
+type helloWorldResponse struct {
+    // change the output field to be "message"   
+    Message   string `json:"message"`   
+    // do not output this field   
+    Author  string `json:"-"`   
+    // do not output the field if the value is empty   
+    Date    string `json:",omitempty"`   
+    // convert output to a string and rename "id"   
+    Id    int    `json:"id, string"`}
+---------------------------------------------------------------------------------------------------
+If we want to export our JSON prettily formatted with indentation, we can use theMarshallIndent function,
+this allows you to pass an additional parameter of string tospecify what you would like the indent to be.
+Two spaces right, not a tab?
+
+func MarshalIndent(v interface{}, prefix, indent string) ([]byte, error)
+-----------------------------------------------------------------------------------------------------------
+The ResponseWriter is an interface that defines three methods:
+
+// Returns the map of headers which will be sent by the
+// WriteHeader method.
+Header()
+
+// Writes the data to the connection. If WriteHeader has not
+// already been called then Write will call
+// WriteHeader(http.StatusOK).
+Write([]byte) (int, error)
+
+// Sends an HTTP response header with the status code.
+WriteHeader(int)
+------------------------------------------------------------------------------------------------------------
+If we have a ResponseWriter interface, how can we use this with fmt.Fprint(w io.Writer, a ...interface{})?
+
+This method requires a Writer interface as a parameter and we have a ResponseWriter interface.
+If we look at the signature for Writer we can see that it is:
+
+Write(p []byte) (n int, err error)
+
+Because the ResponseWriter interface implements this method,
+it also satisfies the interface Writer and therefore any object that implements ResponseWriter can be passed to any function that expects Writer.
+--------------------------------------------------------------------------------------------------------------
+The encoding/json package has a function called NewEncoder this returns us an Encoderobject that can be used to write 
+JSON straight to an open writer and guess what; we haveone of those:
+
+func NewEncoder(w io.Writer) *Encoder
+
+So instead of storing the output of Marshal into a byte array, we can write it straight to the HTTP response.
+---------------------------------------------------------------------------------------------------------------
