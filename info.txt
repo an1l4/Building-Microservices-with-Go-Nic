@@ -54,3 +54,33 @@ func NewEncoder(w io.Writer) *Encoder
 
 So instead of storing the output of Marshal into a byte array, we can write it straight to the HTTP response.
 ---------------------------------------------------------------------------------------------------------------
+Applying similar techniques that we learned in the previous section to write JSON,
+readingJSON is just as easy. To decode JSON into a stuct field the encoding/json packageprovides us with the Unmarshal function:
+
+func Unmarshal(data []byte, v interface{}) error
+----------------------------------------------------------------------------------------------------------------
+To access the JSON sent with the request we need to take a look at the http.Requestobject passed to our handler
+
+type Requests struct {
+    ...
+      // Method specifies the HTTP method (GET, POST, PUT, etc.).
+      Method string
+      
+      // Header contains the request header fields received by the server. The type Header is a link to map[string] []string.
+      Header Header
+      
+      // Body is the request's body.
+      Body io.ReadCloser
+      ...
+      }
+-----------------------------------------------------------------------------------------------------------------
+The JSON that has been sent with the request is accessible in the Body field. 
+Body implements the interface io.ReadCloser as a stream and does not return a []byte or astring.
+If we need the data contained in the body, we can simply read it into a byte array,as shown in the following example:
+
+30 body, err := ioutil.ReadAll(r.Body)
+31 if err != nil {
+    32     http.Error(w, "Bad request", http.StatusBadRequest)
+    33     return
+    34 }
+---------------------------------------------------------------------------------------------------------------------
