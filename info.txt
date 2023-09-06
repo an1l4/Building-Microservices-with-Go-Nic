@@ -84,3 +84,33 @@ If we need the data contained in the body, we can simply read it into a byte arr
     33     return
     34 }
 ---------------------------------------------------------------------------------------------------------------------
+explanation of reading_writing_json_7
+
+This is a simple Go program that starts an HTTP server on port 8080 and listens for requests on the /helloworld endpoint.
+The server uses a validationHandler to validate incoming requests and a helloWorldHandler to handle valid requests.
+
+The main function starts by defining the port number on which the server will listen.
+It then creates a new helloWorldHandler and wraps it in a validationHandler using the newValidationHandler function.
+The resulting handler is then registered with the HTTP server to handle requests on the /helloworld endpoint.
+
+The validationHandler is responsible for validating incoming requests.
+It does this by implementing the ServeHTTP method of the http.Handler interface.
+This method is called by the HTTP server whenever a request is received on the /helloworld endpoint.
+
+The ServeHTTP method of the validationHandler starts by creating a new helloWorldRequest object and 
+using a JSON decoder to decode the request body into this object. If an error occurs during decoding,
+the method returns an HTTP 400 Bad Request response to the client.
+
+If the request is successfully decoded, the ServeHTTP method of the validationHandler calls
+the ServeHTTP method of its next handler, which is the helloWorldHandler.
+This passes control to the helloWorldHandler, which is responsible for handling valid requests.
+
+The helloWorldHandler implements the ServeHTTP method of the http.Handler interface.
+This method creates a new helloWorldResponse object with a message of “Hello” and 
+uses a JSON encoder to encode this object into the response body.
+The resulting response is then sent back to the client.
+
+Overall, this program demonstrates how to create an HTTP server in Go, 
+how to use handlers to validate and process incoming requests, and how to encode and decode JSON data in request and 
+response bodies.
+----------------------------------------------------------------------------------------------------------------------
