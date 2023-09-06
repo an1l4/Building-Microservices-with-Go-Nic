@@ -114,3 +114,14 @@ Overall, this program demonstrates how to create an HTTP server in Go,
 how to use handlers to validate and process incoming requests, and how to encode and decode JSON data in request and 
 response bodies.
 ----------------------------------------------------------------------------------------------------------------------
+The Context() method gives us access to a context.Context structure which is always non nil as it is populated
+when the request is originally created. For inbound requests the http.
+Server manages the lifecycle of the context automatically cancelling it when the client connection closes. 
+For outbound requests, Context controls cancellation, by this we mean that if we cancel the Context() method 
+we can cancel the outgoing request.
+-------------------------------------------------------------------------------------------------------------------
+The reason we are not just using a simple string is that context often flows across packagesand 
+if we just used string then we could end up with a key clash where one package withinyour control is writing a name key 
+and another package which is outside of your control is also using the context and writing a key called name, 
+in this instance the second package would inadvertently overwrite your context value. 
+By declaring a package level typevalidationContextKey and using this we can ensure that we avoid these collisions:
