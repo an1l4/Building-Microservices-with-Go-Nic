@@ -125,3 +125,26 @@ if we just used string then we could end up with a key clash where one package w
 and another package which is outside of your control is also using the context and writing a key called name, 
 in this instance the second package would inadvertently overwrite your context value. 
 By declaring a package level typevalidationContextKey and using this we can ensure that we avoid these collisions:
+--------------------------------------------------------------------------------------------------------------------------
+(https://github.com/NYTimes/gziphandler)
+-----------------------------------------------------------------------------------------------------------------------------
+Microsoft has provided an excellent API guidelines resource, you can read more about 
+returning errors by looking at the following link:
+https://github.com/Microsoft/api-guidelines/blob/master/Guidelines.md#51-errors
+--------------------------------------------------------------------------------------------------------
+Accessing APIs from JavaScript
+Web browsers implement a sandbox mechanism that restricts resources in one domain from
+accessing resources in another. For example, you may have an API that allows the
+modification and retrieval of user data and a website that provides an interface for this API.
+If the browser did not implement the "same-origin policy" and assuming the user did not
+log out of their session then it would be possible for a malicious page to send a request to
+the API and modify it without you knowing.To get around this, there are two methods that can be
+implemented by your microservice toallow this access, JSONP which stands for (JSON with Padding) 
+and CORS (Cross-OriginResource Sharing).
+-------------------------------------------------------------------------------------------------------
+https://semver.org/
+-------------------------------------------------------------------------------------------------------
+https://www.openapis.org/
+https://swagger.io/
+-------------------------------------------------------------------------------------------------------
+https://www.redhat.com/en/blog/history-containers
