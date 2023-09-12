@@ -148,3 +148,21 @@ https://www.openapis.org/
 https://swagger.io/
 -------------------------------------------------------------------------------------------------------
 https://www.redhat.com/en/blog/history-containers
+When you execute a docker run the first thing the engine does is check to see if you have
+the image installed locally. If it doesn't then it connects to the default registry,
+in this case, https://hub.docker.com/ to retrieve it.
+-------------------------------------------------------------------------------------------------------
+https://www.weave.works/
+https://www.tigera.io/project-calico/
+-------------------------------------------------------------------------------------------------------
+Bad Practice:
+RUN apt-get update
+RUN apt-get install -y wget
+RUN apt-get install -y curl
+RUN apt-get install -y nginx
+
+Good Practice:
+RUN apt-get update && \  
+    apt-get install -y wget curl nginx
+------------------------------------------------------------------------------------------------------
+https://docs.docker.com/engine/reference/builder/#/dockerignore-file
