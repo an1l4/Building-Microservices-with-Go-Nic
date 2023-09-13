@@ -166,3 +166,18 @@ RUN apt-get update && \
     apt-get install -y wget curl nginx
 ------------------------------------------------------------------------------------------------------
 https://docs.docker.com/engine/reference/builder/#/dockerignore-file
+------------------------------------------------------------------------------------------------------
+ With outside-indevelopment, you start by writing your tests almost at the top of the pyramid,
+ determinewhat the functionality is going to be for the story you are working on,
+ and then write somefailing test for this story. Then you work on implementing the unit tests and
+ code whichstarts to get the various steps in the behavioral tests to pass
+------------------------------------------------------------------------------------------------------
+One of the most effective ways to test a microservice in Go is not to fall into the trap of
+trying to execute all the tests through the HTTP interface. We need to develop a pattern that
+avoids creating a physical web server for testing our handlers, the code to create this kind of
+test is slow to run and incredibly tedious to write. What need to be doing is to test our
+handlers and the code within them as unit tests. These tests will run far quicker than testing
+through the web server, and if we think about the coverage, we will be able to test the
+wiring of the handlers in the Cucumber tests that execute a request to the running server
+which overall gives us 100% coverage of our code
+------------------------------------------------------------------------------------------------------
